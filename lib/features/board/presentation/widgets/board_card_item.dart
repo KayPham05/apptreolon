@@ -1,10 +1,52 @@
 import 'package:flutter/material.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../domain/entities/board_entity.dart';
 
 class BoardCardItem extends StatelessWidget {
-  const BoardCardItem({super.key});
+  final BoardEntity board;
+  final VoidCallback? onTap;
+
+  const BoardCardItem({super.key, required this.board, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return const Card(child: ListTile(title: Text('Board Item')));
+    final color = _hexToColor(board.coverColor ?? '#0079BF');
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              board.name,
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const Spacer(),
+            Row(
+              children: [
+                const Spacer(),
+                Icon(
+                  board.visibility == 'Private' ? Icons.lock_outline : Icons.public,
+                  color: Colors.white.withOpacity(0.7),
+                  size: 14,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Color _hexToColor(String hex) {
+    final h = hex.replaceAll('#', '');
+    return Color(int.parse('FF$h', radix: 16));
   }
 }

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'features/auth/presentation/pages/login_page.dart';
-import 'features/board/presentation/pages/board_list_page.dart';
+import 'core/common_widgets/main_shell.dart';
+import 'features/board/presentation/pages/board_detail_page.dart';
 
 class AppRoutes {
+  static const String home = '/';
+  static const String boardDetail = '/board-detail';
+
   static Map<String, WidgetBuilder> routes = {
-    '/': (context) => const LoginPage(),
-    '/boards': (context) => const BoardListPage(),
+    home: (context) => const MainShell(),
+    boardDetail: (context) => const BoardDetailPage(),
   };
 }
